@@ -47,3 +47,54 @@ For each collection, the sample derives component scores (0–100) from emission
 - Owner dispersion (inverted)
 
 A weighted sum produces **Greed** (0–100). **Fear** is `100 - Greed`.
+
+
+## Fear / Greed Index (пример)
+
+Минимальный пример на **React + TypeScript**, который:
+
+- Запрашивает **статистику эмиссии** через GiftAsset API (**`giftasset.pro`**)
+- Считает **Fear/Greed score** (0–100)
+- Показывает результат в простом UI
+
+### 1) Получить API key GiftAsset
+Чтобы делать запросы, нужен GiftAsset API key.
+
+- Подайте заявку на доступ в GiftAsset (получите API key на `giftasset.pro`).
+
+### 2) Запуск примера
+Из корня репозитория:
+
+```bash
+cd samples/fear-greed-index
+npm install
+cp env.example .env
+npm run dev
+```
+
+Далее откройте URL, который выведет dev-сервер.
+
+### 3) Настройка credentials (без приватных токенов)
+Отредактируйте локальный `.env` (никогда не коммитьте его):
+
+- `VITE_GIFTASSET_BASE_URL` (по умолчанию `https://api.giftasset.pro`)
+- `VITE_GIFTASSET_API_KEY`
+- `VITE_GIFTASSET_BEARER_TOKEN` (опционально, если ваш тариф/доступ GiftAsset этого требует)
+
+### 4) Какой endpoint вызывается?
+Пример вызывает:
+
+- `GET /api/a/api/v1/gifts/get_gifts_collections_emission`
+
+на base URL из `VITE_GIFTASSET_BASE_URL`.
+
+### 5) Как считается индекс
+Для каждой коллекции пример получает component scores (0–100) из emission stats:
+
+- Whale concentration (доля у крупных держателей)
+- Upgrade rate
+- Hidden ratio
+- Refund rate (инвертируется)
+- Owner dispersion (инвертируется)
+
+Далее считается взвешенная сумма → **Greed** (0–100). **Fear** считается как `100 - Greed`.
